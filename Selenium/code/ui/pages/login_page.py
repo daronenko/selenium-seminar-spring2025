@@ -11,10 +11,10 @@ class LoginPage(BasePage):
     locators = LoginPageLocators
 
     def login(self, email, password):
-        self.click(self.locators.LOGIN_BTN_LOCATOR)
-        self.click(self.locators.CONTINUE_WITH_CREDS_BTN_LOCATOR)
-        self.find(self.locators.EMAIL_INPUT_LOCATOR).send_keys(email)
-        self.find(self.locators.PASSWORD_INPUT_LOCATOR).send_keys(password)
-        self.click(self.locators.SUBMIT_BTN_LOCATOR)
+        self.click(self.locators.LOGIN_BTN)
+        self.click(self.locators.CONTINUE_WITH_CREDS_BTN)
+        self.find(self.locators.EMAIL_INPUT).send_keys(email)
+        self.find(self.locators.PASSWORD_INPUT).send_keys(password)
+        self.click(self.locators.SUBMIT_BTN)
 
         self.wait().until(EC.url_to_be(FeedPage.url))
