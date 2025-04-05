@@ -8,6 +8,12 @@ from _pytest.fixtures import FixtureRequest
 class TestSchedule(BaseCase):
     authorize = True
 
+    EVENT_DATE = '3 апреля 2025'
+
+    EXPECTED_EVENT_TITLE = 'End-to-End тесты на Python'
+    EXPECTED_EVENT_LOCATION = '395 - зал 1,2 (МГТУ)'
+    EXPECTED_EVENT_TYPE = f'{ScheduleEventType.SEMINAR.value} 2'
+
     def test_schedule(self, request: FixtureRequest):
         schedule_page = request.getfixturevalue('schedule_page')
 
@@ -17,15 +23,15 @@ class TestSchedule(BaseCase):
         schedule_page.select_group('WEB-31')
 
         expected_event = {
-            'title': 'End-to-End тесты на Python',
+            'title': TestSchedule.EXPECTED_EVENT_TITLE,
             'discipline': ScheduleDiscipline.QA.value,
-            'location': '395 - зал 1,2 (МГТУ)',
-            'event_type': f'{ScheduleEventType.SEMINAR.value} 2'
+            'location': TestSchedule.EXPECTED_EVENT_LOCATION,
+            'event_type': TestSchedule.EXPECTED_EVENT_TYPE,
         }
 
         found_event = None
         schedule = schedule_page.parse_schedule()
-        for event in schedule['3 апреля 2025']:
+        for event in schedule[TestSchedule.EVENT_DATE]:
             if event['title'] == expected_event['title']:
                 found_event = event
                 break
