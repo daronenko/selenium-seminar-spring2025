@@ -1,6 +1,8 @@
 from ui.pages.base_page import BasePage
-from ui.pages.people_page import PeoplePage
 from ui.pages.login_page import LoginPage
+from ui.pages.feed_page import FeedPage
+from ui.pages.people_page import PeoplePage
+from ui.pages.schedule_page import SchedulePage
 
 import pytest
 from selenium import webdriver
@@ -65,6 +67,26 @@ def all_drivers(config, request):
 @pytest.fixture
 def base_page(driver):
     return BasePage(driver=driver)
+
+
+@pytest.fixture
+def login_page(driver):
+    return LoginPage(driver=driver)
+
+
+@pytest.fixture
+def feed_page(driver):
+    return FeedPage(driver=driver)
+
+
+@pytest.fixture
+def people_page(driver):
+    return PeoplePage(driver=driver)
+
+
+@pytest.fixture
+def schedule_page(driver):
+    return SchedulePage(driver=driver)
 
 
 @pytest.fixture(scope='session')

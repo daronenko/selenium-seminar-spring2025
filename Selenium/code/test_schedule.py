@@ -1,15 +1,20 @@
 from base import BaseCase
 from ui.pages.schedule_page import ScheduleInterval, ScheduleDiscipline, ScheduleEventType
+from ui.fixtures import *
+
+from _pytest.fixtures import FixtureRequest
 
 
 class TestSchedule(BaseCase):
     authorize = True
 
-    def test_schedule(self):
-        self.schedule_page.open()
+    def test_schedule(self, request: FixtureRequest):
+        schedule_page = request.getfixturevalue('schedule_page')
 
-        self.schedule_page.select_interval(ScheduleInterval.ENTIRE_SEMESTER)
-        self.schedule_page.select_group('WEB-31')
+        schedule_page.open()
+
+        schedule_page.select_interval(ScheduleInterval.ENTIRE_SEMESTER)
+        schedule_page.select_group('WEB-31')
 
         expected_event = {
             'title': 'End-to-End тесты на Python',
@@ -19,7 +24,7 @@ class TestSchedule(BaseCase):
         }
 
         found_event = None
-        schedule = self.schedule_page.parse_schedule()
+        schedule = schedule_page.parse_schedule()
         for event in schedule['3 апреля 2025']:
             if event['title'] == expected_event['title']:
                 found_event = event

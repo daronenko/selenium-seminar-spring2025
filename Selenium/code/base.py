@@ -1,7 +1,4 @@
-from ui.pages.login_page import LoginPage
-from ui.pages.feed_page import FeedPage
-from ui.pages.people_page import PeoplePage
-from ui.pages.schedule_page import SchedulePage
+from ui.fixtures import *
 
 import pytest
 from _pytest.fixtures import FixtureRequest
@@ -15,14 +12,10 @@ class BaseCase:
         self.driver = driver
         self.config = config
         
-        self.login_page = LoginPage(driver)
-        self.feed_page = FeedPage(driver)
-        self.people_page = PeoplePage(driver)
-        self.schedule_page = SchedulePage(driver)
-
         if self.authorize:
+            login_page = request.getfixturevalue('login_page')
             credentials = request.getfixturevalue('credentials')
-            self.login_page.login(
+            login_page.login(
                 credentials['email'],
                 credentials['password'],
             )
