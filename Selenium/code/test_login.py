@@ -10,4 +10,4 @@ class TestLogin(BaseCase):
              credentials['email'],
              credentials['password'],
         )
-        assert self.driver.current_url == FeedPage.url
+        assert self.driver.current_url == FeedPage.url, f"failed to login with credentials: '{credentials}'"

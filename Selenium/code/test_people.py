@@ -9,4 +9,4 @@ class TestPeople(BaseCase):
     def test_search(self):
         self.people_page.open()
         found_people = self.people_page.search(self.USER_NAME)
-        assert self.USER_NAME in found_people
+        assert self.USER_NAME in found_people, f"user '{self.USER_NAME}' not found in search results: '{found_people}'"
