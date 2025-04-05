@@ -1,10 +1,14 @@
+from ui.pages.base_page import BasePage
+from ui.pages.people_page import PeoplePage
+from ui.pages.login_page import LoginPage
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from ui.pages.base_page import BasePage
-from ui.pages.main_page import MainPage
+
+import os
 
 
 @pytest.fixture()
@@ -63,6 +67,17 @@ def base_page(driver):
     return BasePage(driver=driver)
 
 
-@pytest.fixture
-def main_page(driver):
-    return MainPage(driver=driver)
+@pytest.fixture(scope='session')
+def credentials() -> dict[str, str]:
+    return {
+        'email': os.environ.get('VKEDU_EMAIL'),
+        'password': os.environ.get('VKEDU_PASSWORD')
+    }
+
+
+@pytest.fixture(scope='session')
+def cookies(credentials, driver) -> list[dict]:
+    login_page = LoginPage(driver)
+    login_page.login(credentials['email'], credentials['password'])
+    return driver.get_cookies()
+
