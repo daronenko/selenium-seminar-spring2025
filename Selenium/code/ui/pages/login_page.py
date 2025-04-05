@@ -11,8 +11,6 @@ class LoginPage(BasePage):
     locators = LoginPageLocators
 
     def login(self, email, password):
-        self.driver.maximize_window()
-        
         self.click(self.locators.LOGIN_BTN_LOCATOR)
         self.click(self.locators.CONTINUE_WITH_CREDS_BTN_LOCATOR)
         self.find(self.locators.EMAIL_INPUT_LOCATOR).send_keys(email)
